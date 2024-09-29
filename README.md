@@ -17,7 +17,7 @@
 {
   "AutoSaveToggler.config": {
     "isActive": true,
-    "variant": 1
+    "variant": 3
   }
 }
 ```
