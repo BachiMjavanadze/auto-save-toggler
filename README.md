@@ -3,7 +3,7 @@
 
 ### Description
 
-`Auto Save Toggler` is a [VSCode extension](https://github.com/BachiMjavanadze/auto-save-toggler) that enhances your workflow by providing quick access to save functions directly from your editor toolbar. This extension helps you manage your auto-save preferences with ease.
+`Auto Save Toggler` is a [VSCode extension](https://marketplace.visualstudio.com/items?itemName=BachiMjavanadze.auto-save-toggler) that enhances your workflow by providing quick access to save functions directly from your editor toolbar. This extension helps you manage your auto-save preferences with ease.
 
 ### Features
 

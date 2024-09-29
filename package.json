@@ -1,8 +1,8 @@
 {
   "name": "auto-save-toggler",
   "displayName": "Auto Save Toggler",
-  "description": "Toggle AutoSave and Save All buttons in the toolbar",
-  "version": "1.0.0",
+  "description": "Toggle AutoSave and quick access to save button directly from your editor toolbar",
+  "version": "1.0.2",
   "publisher": "BachiMjavanadze",
   "engines": {
     "vscode": "^1.93.0"
