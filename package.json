@@ -1,0 +1,131 @@
+{
+  "name": "auto-save-toggler",
+  "displayName": "Auto Save Toggler",
+  "description": "Toggle AutoSave and Save All buttons in the toolbar",
+  "version": "1.0.0",
+  "publisher": "BachiMjavanadze",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/auto-save-toggler.git"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "keywords": [
+    "auto",
+    "automatic",
+    "save",
+    "saveall",
+    "save all",
+    "save-all",
+    "toggle",
+    "toggler"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "AutoSaveToggler",
+      "properties": {
+        "AutoSaveToggler.config": {
+          "type": "object",
+          "default": {
+            "isActive": true,
+            "compactView": true
+          },
+          "description": "Configuration for AutoSaveToggler"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "auto-save-toggler.saveAll",
+        "title": "💾 Save All",
+        "icon": "$(save-all)"
+      },
+      {
+        "command": "auto-save-toggler.toggleAutoSave",
+        "title": "🔄 Toggle Auto Save",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "auto-save-toggler.dynamicActionSaveAll",
+        "title": "Save All",
+        "icon": "$(save-all)"
+      },
+      {
+        "command": "auto-save-toggler.dynamicActionToggleAutoSave",
+        "title": "Toggle Auto Save",
+        "icon": "$(sync)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "auto-save-toggler.saveAll",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && !config.AutoSaveToggler.config.compactView"
+        },
+        {
+          "command": "auto-save-toggler.toggleAutoSave",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && !config.AutoSaveToggler.config.compactView"
+        },
+        {
+          "command": "auto-save-toggler.dynamicActionSaveAll",
+          "group": "navigation@1",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView && AutoSaveToggler.lastUsedAction == 'saveAll'"
+        },
+        {
+          "command": "auto-save-toggler.dynamicActionToggleAutoSave",
+          "group": "navigation@1",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView && AutoSaveToggler.lastUsedAction == 'toggleAutoSave'"
+        },
+        {
+          "submenu": "auto-save-toggler.menu",
+          "group": "navigation@2",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView"
+        }
+      ],
+      "auto-save-toggler.menu": [
+        {
+          "command": "auto-save-toggler.saveAll",
+          "group": "1_modification"
+        },
+        {
+          "command": "auto-save-toggler.toggleAutoSave",
+          "group": "1_modification"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "auto-save-toggler.menu",
+        "icon": "$(chevron-down)",
+        "label": "Select a button"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.93.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
