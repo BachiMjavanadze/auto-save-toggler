@@ -2,7 +2,7 @@
   "name": "auto-save-toggler",
   "displayName": "Auto Save Toggler",
   "description": "Toggle AutoSave and quick access to save button directly from your editor toolbar",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "publisher": "BachiMjavanadze",
   "engines": {
     "vscode": "^1.93.0"
@@ -37,9 +37,26 @@
       "properties": {
         "AutoSaveToggler.config": {
           "type": "object",
+          "properties": {
+            "isActive": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable or disable the AutoSaveToggler extension"
+            },
+            "variant": {
+              "type": "number",
+              "enum": [
+                1,
+                2,
+                3
+              ],
+              "default": 1,
+              "description": "Select the display variant (1 for compact, 2 for expanded, 3 for single toggle button)"
+            }
+          },
           "default": {
             "isActive": true,
-            "compactView": true
+            "variant": 3
           },
           "description": "Configuration for AutoSaveToggler"
         }
@@ -65,6 +82,16 @@
         "command": "auto-save-toggler.dynamicActionToggleAutoSave",
         "title": "Toggle Auto Save",
         "icon": "$(sync)"
+      },
+      {
+        "command": "auto-save-toggler.toggleAutoSaveOn",
+        "title": "Turn Auto Save On",
+        "icon": "$(circle-large-filled)"
+      },
+      {
+        "command": "auto-save-toggler.toggleAutoSaveOff",
+        "title": "Turn Auto Save Off",
+        "icon": "$(circle-large-outline)"
       }
     ],
     "menus": {
@@ -72,27 +99,37 @@
         {
           "command": "auto-save-toggler.saveAll",
           "group": "navigation",
-          "when": "config.AutoSaveToggler.config.isActive && !config.AutoSaveToggler.config.compactView"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2"
         },
         {
           "command": "auto-save-toggler.toggleAutoSave",
           "group": "navigation",
-          "when": "config.AutoSaveToggler.config.isActive && !config.AutoSaveToggler.config.compactView"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2"
         },
         {
           "command": "auto-save-toggler.dynamicActionSaveAll",
           "group": "navigation@1",
-          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView && AutoSaveToggler.lastUsedAction == 'saveAll'"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 1 && AutoSaveToggler.lastUsedAction == 'saveAll'"
         },
         {
           "command": "auto-save-toggler.dynamicActionToggleAutoSave",
           "group": "navigation@1",
-          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView && AutoSaveToggler.lastUsedAction == 'toggleAutoSave'"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 1 && AutoSaveToggler.lastUsedAction == 'toggleAutoSave'"
+        },
+        {
+          "command": "auto-save-toggler.toggleAutoSaveOn",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 3 && !AutoSaveToggler.autoSaveEnabled"
+        },
+        {
+          "command": "auto-save-toggler.toggleAutoSaveOff",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 3 && AutoSaveToggler.autoSaveEnabled"
         },
         {
           "submenu": "auto-save-toggler.menu",
           "group": "navigation@2",
-          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.compactView"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 1"
         }
       ],
       "auto-save-toggler.menu": [
