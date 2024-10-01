@@ -2,6 +2,7 @@ const vscode = require('vscode');
 
 let lastUsedAction = 'saveAll';
 let autoSaveEnabled = false;
+let isDirty = false;
 
 function activate(context) {
     console.log('AutoSaveToggler is now active!');
@@ -9,6 +10,16 @@ function activate(context) {
     let saveAllDisposable = vscode.commands.registerCommand('auto-save-toggler.saveAll', function () {
         vscode.commands.executeCommand('workbench.action.files.saveAll');
         updateDynamicAction('saveAll');
+    });
+
+    let saveAllDirtyDisposable = vscode.commands.registerCommand('auto-save-toggler.saveAllDirty', function () {
+        vscode.commands.executeCommand('workbench.action.files.saveAll');
+        updateDirtyStatus();
+    });
+
+    let saveAllCleanDisposable = vscode.commands.registerCommand('auto-save-toggler.saveAllClean', function () {
+        vscode.commands.executeCommand('workbench.action.files.saveAll');
+        updateDirtyStatus();
     });
 
     let toggleAutoSaveDisposable = vscode.commands.registerCommand('auto-save-toggler.toggleAutoSave', function () {
@@ -36,6 +47,8 @@ function activate(context) {
 
     context.subscriptions.push(
         saveAllDisposable,
+        saveAllDirtyDisposable,
+        saveAllCleanDisposable,
         toggleAutoSaveDisposable,
         dynamicActionSaveAllDisposable,
         dynamicActionToggleAutoSaveDisposable,
@@ -45,12 +58,17 @@ function activate(context) {
 
     vscode.workspace.onDidChangeConfiguration(event => {
         if (event.affectsConfiguration('AutoSaveToggler.config') || event.affectsConfiguration('files.autoSave')) {
-            updateContexts();
+            updateAutoSaveStatus();
+            updateDirtyStatus();
         }
     });
 
+    vscode.workspace.onDidChangeTextDocument(() => {
+        updateDirtyStatus();
+    });
+
     updateAutoSaveStatus();
-    updateContexts();
+    updateDirtyStatus();
 }
 
 function updateDynamicAction(action) {
@@ -64,15 +82,17 @@ function updateContexts() {
     vscode.commands.executeCommand('setContext', 'AutoSaveToggler.variant', config.variant);
     vscode.commands.executeCommand('setContext', 'AutoSaveToggler.lastUsedAction', lastUsedAction);
     vscode.commands.executeCommand('setContext', 'AutoSaveToggler.autoSaveEnabled', autoSaveEnabled);
+    vscode.commands.executeCommand('setContext', 'AutoSaveToggler.isDirty', isDirty && !autoSaveEnabled);
 }
 
-function updateAutoSaveStatus(forcedState) {
-    if (forcedState !== undefined) {
-        autoSaveEnabled = forcedState;
-    } else {
-        const autoSave = vscode.workspace.getConfiguration('files').get('autoSave');
-        autoSaveEnabled = autoSave !== 'off';
-    }
+function updateAutoSaveStatus() {
+    const autoSave = vscode.workspace.getConfiguration('files').get('autoSave');
+    autoSaveEnabled = autoSave !== 'off';
+    updateContexts();
+}
+
+function updateDirtyStatus() {
+    isDirty = vscode.workspace.textDocuments.some(doc => doc.isDirty);
     updateContexts();
 }
 

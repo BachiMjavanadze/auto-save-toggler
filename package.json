@@ -69,6 +69,16 @@
         "icon": "$(save-all)"
       },
       {
+        "command": "auto-save-toggler.saveAllDirty",
+        "title": "💾 Save All (Dirty)",
+        "icon": "$(save-all)"
+      },
+      {
+        "command": "auto-save-toggler.saveAllClean",
+        "title": "💾 Save All (Clean)",
+        "icon": "$(save)"
+      },
+      {
         "command": "auto-save-toggler.toggleAutoSave",
         "title": "🔄 Toggle Auto Save",
         "icon": "$(sync)"
@@ -97,9 +107,14 @@
     "menus": {
       "editor/title": [
         {
-          "command": "auto-save-toggler.saveAll",
+          "command": "auto-save-toggler.saveAllDirty",
           "group": "navigation",
-          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2 && AutoSaveToggler.isDirty"
+        },
+        {
+          "command": "auto-save-toggler.saveAllClean",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2 && !AutoSaveToggler.isDirty"
         },
         {
           "command": "auto-save-toggler.toggleAutoSaveOn",
