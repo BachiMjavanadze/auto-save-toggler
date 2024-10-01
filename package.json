@@ -102,9 +102,14 @@
           "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2"
         },
         {
-          "command": "auto-save-toggler.toggleAutoSave",
+          "command": "auto-save-toggler.toggleAutoSaveOn",
           "group": "navigation",
-          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2"
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2 && !AutoSaveToggler.autoSaveEnabled"
+        },
+        {
+          "command": "auto-save-toggler.toggleAutoSaveOff",
+          "group": "navigation",
+          "when": "config.AutoSaveToggler.config.isActive && config.AutoSaveToggler.config.variant == 2 && AutoSaveToggler.autoSaveEnabled"
         },
         {
           "command": "auto-save-toggler.dynamicActionSaveAll",
