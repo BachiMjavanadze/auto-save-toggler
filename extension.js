@@ -67,6 +67,7 @@ function activate(context) {
         updateDirtyStatus();
     });
 
+    // Initial update
     updateAutoSaveStatus();
     updateDirtyStatus();
 }
