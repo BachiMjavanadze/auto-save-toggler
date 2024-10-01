@@ -22,6 +22,11 @@
 }
 ```
 
+### Configuration
+
+- `isActive`: Set to `true` to enable the extension, `false` to disable.
+- `variant`: Choose the display variant (1 for compact, 2 for expanded, 3 for single toggle button).
+
 ### Usage
 
 After installation, you'll see new buttons in your editor title bar. The appearance depends on your chosen variant:
@@ -41,22 +46,6 @@ After installation, you'll see new buttons in your editor title bar. The appeara
 3. **Variant 3 (Single Toggle)**: A single button to toggle Auto Save on/off with changing icons.
 
 ![single image](media/single.jpg)
-
-### Configuration
-
-You can customize the extension's behavior in your VSCode settings:
-
-```json
-{
-  "AutoSaveToggler.config": {
-    "isActive": true,
-    "variant": 1
-  }
-}
-```
-
-- `isActive`: Set to `true` to enable the extension, `false` to disable.
-- `variant`: Choose the display variant (1 for compact, 2 for expanded, 3 for single toggle button).
 
 ### License
 
