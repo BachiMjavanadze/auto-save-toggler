@@ -49,4 +49,4 @@ After installation, you'll see new buttons in your editor title bar. The appeara
 
 ### License
 
-This extension is licensed under the [MIT License](LICENSE).
+This extension is licensed under the [MIT License](LICENSE.md).

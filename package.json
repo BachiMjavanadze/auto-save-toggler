@@ -70,12 +70,12 @@
       },
       {
         "command": "auto-save-toggler.saveAllDirty",
-        "title": "💾 Save All (Dirty)",
+        "title": "Save All (Dirty)",
         "icon": "$(save-all)"
       },
       {
         "command": "auto-save-toggler.saveAllClean",
-        "title": "💾 Save All (Clean)",
+        "title": "Save All (Clean)",
         "icon": "$(save)"
       },
       {
