@@ -4,6 +4,12 @@ let lastUsedAction = 'saveAll';
 let autoSaveEnabled = false;
 let isDirty = false;
 
+let killAllButton;
+let toggleTerminalButton;
+
+const KILL_ALL_PRIORITY = -999999;
+const TOGGLE_TERMINAL_PRIORITY = -999998;
+
 function activate(context) {
     console.log('AutoSaveToggler is now active!');
 
@@ -60,6 +66,7 @@ function activate(context) {
         if (event.affectsConfiguration('AutoSaveToggler.config') || event.affectsConfiguration('files.autoSave')) {
             updateAutoSaveStatus();
             updateDirtyStatus();
+            refreshStatusBarButtons();
         }
     });
 
@@ -67,9 +74,32 @@ function activate(context) {
         updateDirtyStatus();
     });
 
-    // Initial update
     updateAutoSaveStatus();
     updateDirtyStatus();
+    refreshStatusBarButtons();
+}
+
+function refreshStatusBarButtons() {
+    const config = vscode.workspace.getConfiguration('AutoSaveToggler').get('config') || {};
+
+    if (killAllButton) { killAllButton.dispose(); killAllButton = undefined; }
+    if (toggleTerminalButton) { toggleTerminalButton.dispose(); toggleTerminalButton = undefined; }
+
+    if (config.killAllTasks !== false) {
+        killAllButton = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, KILL_ALL_PRIORITY);
+        killAllButton.text = '$(trash)';
+        killAllButton.tooltip = 'Kill All Tasks';
+        killAllButton.command = 'workbench.action.terminal.killAll';
+        killAllButton.show();
+    }
+
+    if (config.toggleTerminal !== false) {
+        toggleTerminalButton = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, TOGGLE_TERMINAL_PRIORITY);
+        toggleTerminalButton.text = '$(terminal-cmd)';
+        toggleTerminalButton.tooltip = 'Toggle Terminal';
+        toggleTerminalButton.command = 'workbench.action.togglePanel';
+        toggleTerminalButton.show();
+    }
 }
 
 function updateDynamicAction(action) {
@@ -97,7 +127,10 @@ function updateDirtyStatus() {
     updateContexts();
 }
 
-function deactivate() { }
+function deactivate() {
+    if (killAllButton) { killAllButton.dispose(); }
+    if (toggleTerminalButton) { toggleTerminalButton.dispose(); }
+}
 
 module.exports = {
     activate,

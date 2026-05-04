@@ -2,7 +2,7 @@
   "name": "auto-save-toggler",
   "displayName": "Auto Save Toggler",
   "description": "Toggle AutoSave and quick access to save button directly from your editor toolbar",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "publisher": "BachiMjavanadze",
   "engines": {
     "vscode": "^1.93.0"
@@ -45,18 +45,26 @@
             },
             "variant": {
               "type": "number",
-              "enum": [
-                1,
-                2,
-                3
-              ],
+              "enum": [1, 2, 3],
               "default": 1,
               "description": "Select the display variant (1 for compact, 2 for expanded, 3 for single toggle button)"
+            },
+            "killAllTasks": {
+              "type": "boolean",
+              "default": true,
+              "description": "Show Kill All Tasks button in the status bar"
+            },
+            "toggleTerminal": {
+              "type": "boolean",
+              "default": true,
+              "description": "Show Toggle Terminal button in the status bar"
             }
           },
           "default": {
             "isActive": true,
-            "variant": 2
+            "variant": 2,
+            "killAllTasks": true,
+            "toggleTerminal": true
           },
           "description": "Configuration for AutoSaveToggler"
         }
